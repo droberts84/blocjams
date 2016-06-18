@@ -29,6 +29,22 @@ var albumPicasso = {
      ]
  };
 
+ var davidsAlbum = {
+   title: 'Straight out of the house',
+   artist: 'David Roberts',
+   label: 'DROB',
+   year: '2016',
+   albumArtUrl: 'assets/images/album_covers/05.png',
+   songs: [
+     { title: 'Sup', duration: '3:01' },
+     { title: 'Walk up to the postman', duration: '2:05' },
+     { title: 'something else', duration: '4:04' },
+     { title: 'Hey there', duration: '1:02' }
+   ]
+ };
+
+ var albums = [albumPicasso, albumMarconi, davidsAlbum];
+
  var createSongRow = function(songNumber, songName, songLength) {
     var template =
        '<tr class="album-view-song-item">'
@@ -60,6 +76,20 @@ var setCurrentAlbum = function(album) {
      }
  };
 
+function nextAlbumIndex(currentIndex) {
+  var i = currentIndex + 1
+  if ( i < albums.length) {
+    return i;
+  } else {
+    return 0;
+  }
+}
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+    var albumIndex = 0;
+    setCurrentAlbum(albums[0]);
+    var albumCover = document.getElementsByClassName('album-cover-art')[0];
+    albumCover.addEventListener('click', function(event) {
+      albumIndex = nextAlbumIndex(albumIndex);
+      setCurrentAlbum(albums[albumIndex]);
+    });
  };
