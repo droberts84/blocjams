@@ -161,11 +161,29 @@ var clickHandler = function() {
 	}
 };
 
+var togglePlayFromPlayerBar = function() {
+  if(!currentSoundFile || currentSoundFile.isPaused()) {
+    // in case current sound file was not previously set
+    setSong(currentlyPlayingSongNumber);
+    // song is selected but paused
+    getSongNumberCell(currentlyPlayingSongNumber).html(pauseButtonTemplate);
+    $playBarPlayPause.html(playerBarPauseButton);
+    currentSoundFile.play();
+  } else {
+    // song is playing
+    currentSoundFile.pause();
+    $playBarPlayPause.html(playerBarPlayButton);
+    getSongNumberCell(currentlyPlayingSongNumber).html(playButtonTemplate);
+  }
+}
+
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playBarPlayPause = $('.main-controls .play-pause')
 
 $(document).ready(function() {
    setCurrentAlbum(albumPicasso);
    $previousButton.click(previousSong);
    $nextButton.click(nextSong);
+   $playBarPlayPause.click(togglePlayFromPlayerBar);
  });
